@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelancer Marketplace</title>
+
+<style>
+:root{
+  --primary:#2563eb;
+  --light:#f3f4f6;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  background:var(--light);
+  padding:20px;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
+/* Header */
+header{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+input{
+  width:70%;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:5px;
+}
+
+/* Cards */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+}
+
+.card{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card h3{
+  margin-bottom:5px;
+}
+
+.skills{
+  margin:10px 0;
+}
+
+.skill{
+  display:inline-block;
+  background:#e5e7eb;
+  padding:5px 8px;
+  margin:3px;
+  border-radius:5px;
+  font-size:12px;
+}
+
+button{
+  padding:8px;
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <h2>Freelancer Marketplace</h2>
+  <input type="text" id="search" placeholder="Search skills..." onkeyup="searchFreelancers()">
+</header>
+
+<div class="grid" id="freelancers"></div>
+
+</div>
+
+<script>
+
+let data = [
+{name:"Vijay", role:"Frontend Developer", skills:["HTML","CSS","JavaScript"]},
+{name:"Ravi", role:"Backend Developer", skills:["Node.js","MongoDB"]},
+{name:"Anita", role:"UI/UX Designer", skills:["Figma","Design"]},
+{name:"Kiran", role:"Full Stack Developer", skills:["React","Node.js"]}
+];
+
+function render(list){
+
+const container=document.getElementById("freelancers");
+container.innerHTML="";
+
+list.forEach(f=>{
+
+container.innerHTML += `
+<div class="card">
+<h3>${f.name}</h3>
+<p>${f.role}</p>
+
+<div class="skills">
+${f.skills.map(s=>`<span class="skill">${s}</span>`).join("")}
+</div>
+
+<button>Hire</button>
+</div>
+`;
+
+});
+
+}
+
+function searchFreelancers(){
+
+const value=document.getElementById("search").value.toLowerCase();
+
+const filtered = data.filter(f =>
+f.skills.join(" ").toLowerCase().includes(value)
+);
+
+render(filtered);
+
+}
+
+render(data);
+
+</script>
+
+</body>
+</html>
